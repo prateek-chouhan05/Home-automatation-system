@@ -1,11 +1,9 @@
 # from _future_ import print_function
 import paho.mqtt.publish as publish
-import psutil
 import string
 import random
 import urllib.request
 import json
-import numpy as np
 from time import sleep
 
 string.alphanum = '1234567890avcdefghijklmnopqrstuvwxyzxABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -13,6 +11,7 @@ string.alphanum = '1234567890avcdefghijklmnopqrstuvwxyzxABCDEFGHIJKLMNOPQRSTUVWX
 # The ThingSpeak Channel ID.
 # Replace <YOUR-CHANNEL-ID> with your channel ID.
 channelID = "1183062"
+
 
 # The write API key for the channel.
 # Replace <YOUR-CHANNEL-WRITEAPIKEY> with your write API key.
