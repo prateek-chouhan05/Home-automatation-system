@@ -41,7 +41,8 @@ def detect_face(video_capture):
         # Input text label with a name below the face
         cv2.rectangle(frame, (left, bottom - 40), (right, bottom), (0, 0, 255), cv2.FILLED)
         font = cv2.FONT_HERSHEY_DUPLEX
-        cv2.putText(frame, name.title(), (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
+        name = name[name.rfind('\\')+1:]
+        cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
     # Display the resulting image
     cv2.imshow('Video', frame)
     return face_names
@@ -53,7 +54,7 @@ def main():
         globals()['image_encoding_{}'.format(i)] = face_recognition.face_encodings(globals()['image_{}'.format(i)])[0]
         faces_encodings.append(globals()['image_encoding_{}'.format(i)])
         # Create array of known names
-        names[i] = names[i].replace(os.path.join(cur_direc, 'faces/'), "").rstrip(".jpeg")
+        names[i] = names[i].replace(os.path.join(cur_direc, 'faces\\'), "").rstrip(".jpeg")
         faces_names.append(names[i])
 
     face_locations = []
