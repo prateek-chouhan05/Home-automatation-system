@@ -5,6 +5,7 @@ import random
 import urllib.request
 import json
 from time import sleep
+import os
 
 string.alphanum = '1234567890avcdefghijklmnopqrstuvwxyzxABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -44,8 +45,10 @@ def updateChannel(chNum):
     print(prevValue)
     if(prevValue == '1'):
         newValue = 0
+        #os.system("python swon.py")
     else:
         newValue = 1
+        #os.system("python swoff.py")
     # Create a random clientID.
     for x in range(1, 16):
         clientID += random.choice(string.alphanum)
