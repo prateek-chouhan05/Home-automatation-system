@@ -3,8 +3,74 @@ import cv2
 import numpy as np
 import os
 import glob
+import paho.mqtt.publish as publish
+import string
+import random
+import urllib.request
+import json
+from time import sleep
+
+# For thingspeak
+string.alphanum = '1234567890avcdefghijklmnopqrstuvwxyzxABCDEFGHIJKLMNOPQRSTUVWXYZ'
+
+# The ThingSpeak Channel ID.
+# Replace <YOUR-CHANNEL-ID> with your channel ID.
+channelID = "1183062"
 
 
+# The write API key for the channel.
+# Replace <YOUR-CHANNEL-WRITEAPIKEY> with your write API key.
+writeAPIKey = "4BL5LWW7788ZKUNY"
+readAPIKey = 'QYTFZ9UB1E8PU4S6'
+
+
+# The hostname of the ThingSpeak MQTT broker.
+mqttHost = "mqtt.thingspeak.com"
+
+# You can use any username.
+mqttUsername = "prateek9144"
+
+# Your MQTT API key from Account > My Profile.
+mqttAPIKey = "9H688S2LQAEE1DZN"
+
+tTransport = "websockets"
+tPort = 80
+
+
+def updateChannel(chNum, value):
+    # Create the  string.
+    topic = "channels/" + channelID + "/publish/" + writeAPIKey
+
+    clientID = ''
+
+    channelField = 'field' + str(chNum)
+
+    value = value.lower()
+    print(value)
+
+    if ('tanmay' in value):
+        newValue = 1
+    elif ('prateek' in value):
+        newValue = 2
+    else:
+        newValue = 3
+    # Create a random clientID.
+    for x in range(1, 16):
+        clientID += random.choice(string.alphanum)
+
+    # build the payload string.
+    payload = channelField + "=" + str(newValue)
+
+    print(payload)
+    # attempt to publish this data to the topic.
+    try:
+        publish.single(topic, payload, hostname=mqttHost, transport=tTransport, port=tPort, auth={
+            'username': mqttUsername, 'password': mqttAPIKey})
+    except:
+        print("There was an error while publishing the data.")
+        sleep(1)
+
+# For face recognition
 faces_encodings = []
 faces_names = []
 cur_direc = os.getcwd()
@@ -64,7 +130,9 @@ def main():
     video_capture = cv2.VideoCapture(0)
     while True:
         face_names = detect_face(video_capture)
-        print(face_names)
+        if len(face_names) != 0:
+            print(face_names[0])
+            updateChannel(5, face_names[0])
         # Hit 'q' on the keyboard to quit!
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
