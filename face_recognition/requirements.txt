@@ -3,3 +3,4 @@ numpy==1.19.3
 opencv-contrib-python==4.4.0.44
 opencv-python==4.4.0.44
 cmake==3.18.2.post1
+paho-mqtt==1.5.1
