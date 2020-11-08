@@ -46,13 +46,13 @@ def updateChannel(chNum):
     prevValue = readData(channelField)
     if(prevValue == '1'): #and field[chNum-1]=='0'):
 
-        command = 'python2 /home/pi/homeautomation/homeautomation/{}on.py'.format(channelField)
+        command = 'python2 {}on.py'.format(channelField)
         os.system(command)
         #field[chNum-1]=prevValue
 
     elif(prevValue == '0'): #and field[chNum-1]!='1'):
 
-        command =  'python2 /home/pi/homeautomation/homeautomation/{}off.py'.format(channelField)
+        command =  'python2 {}off.py'.format(channelField)
         os.system(command)
         #field[chNum-1]=prevValue
 
